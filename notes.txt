@@ -1,0 +1,500 @@
+npm install (install libraries from package.json file in node_modules folder)
+npm start   (runs the "scripts->start" item array in package.json the program to start the program)
+
+
+
+
+
+
+npm install -g @angular/cli (install angular cli)
+
+
+npm install (install package libraries from json files)
+npm start ( to run application)
+
+get cli version and node version
+ng --version
+
+creating module using cli
+ng g m products/product --flat -m app.module
+
+creating new application
+ng new my-app (Generate a new app in /my-app)
+ng new my-app --dry-run (Don't write the files, but report them)
+ng new my-app --skip-install (Generate without running npm install)
+ng new --help
+
+ng new my-app --skip-install --ng4 (Installing version 4 only and not 5)
+
+ng new my-app2 --prefix acme --skip-install --ng4 (Setting prefix to acme and Installing version 4 only and not 5)
+
+ng new my-app3 --skip-tests --prefix acme --skip-install --ng4 (Skip test,Setting prefix to acme and Installing version 4 only and not 5)
+
+ng new my-app5 --routing -prefix acme --skip-install --style scss
+
+ng lint --help(for help)
+ng lint --format stylish
+ng lint --fix (to fix)
+
+ng generate(g) component(c) customer (customer.component.ts)
+ng generate service customer-data (customer-data.service.ts)
+ng generate class customer-model (customer-model.ts)
+
+creating component
+--flat (does not create folder)
+--inline-template (-it) -Will the template be in the .ts file?
+--inline-style (-is) -Will the style be in the .ts file?
+--spec -Generate a spec?
+--view-enscapsulation (-ve) -View encapsulation strategy?
+--change-detection (-cd) -Change detection strategy?
+--dry-run  (-d)  -Report the file, don't write them.
+
+ex. ng g c pet --flat (Don't create a /pet folder)
+               --inline-template (Put the template in the .ts file)
+               --inline-style (Put style in the .ts file)
+	       --prefix my (Prefix the component with my-)
+               --spec false (Don't create a spec file)
+
+
+==============================================================
+Creating application and run it.
+ng new dream-app
+cd dream-app
+ng server -o
+
+- npm list -g @angular/cli --depth=0
+- ng new ngtest --skip-install (generate the app and skip npm install - installing packages)
+- cd ngtest ; npm install (to install packages from package.json) 
+- ng new my-app --dry-run (Don't write the files, but report them)
+- ng new --help (Reports the many options and their defaults)
+- ng new my-app --skip-install --ng4 (installing angular version 4 only)
+- ng new my-app --prefix acme --skip install --ng4 (selector will change prefix to acme; acme-root in)
+- ng new my-app --skip-tests --prefix acme --skip install --ng4 (no app.component.spec.ts will be created for testing)
+- ng --help
+- ng new my-app --skip-tests --prefix acme --skip install --style scss (styles should use SASS)
+- ng new my-app --routing --prefix acme --skip install --style scss (add a default routing module; create routing module; app-routing.module.ts)
+- TIP on creating new project
+  ng new my-app --routing
+                --prefix
+                --style scss 
+                --dry-run (remove when ready) (-d shortcut)
+- ng set defaults.styleExt scss (default local)
+- ng set defaults.styleExt scss -g (for all CLI projects globally)
+- ng lint (Lint the TypeScript code)
+- ng lint --help (Show the help for linting)
+- ng lint --format stylish (Lint and format the output)
+- ng lint --fix (Lint and attempt to fix all problems)
+
+- ng generate component customer -> customer.component.ts
+- ng generate service customer-data -> customer-data.service.ts
+- ng generate class customer-model -> customer-model.ts
+
+- to generate components (by default component create a subfolder)
+  ng generate component customer
+  ng g c customer
+
+- to generate directive in a separate folder (by default directive does not create sub-folder)
+  ng g  d search-box2 --flat false -d
+
+- to generate service
+  ng g s sales-data (SalesDataService does not import automatically to app.module)
+  to insert it automatically:
+  ng g s sales-data -m app.module
+
+- to generate class, interface ...
+  ng g cl models/customer (note that this will be created in the models folder)
+
+- to generate interface
+  ng g i models/person (note that this will be created in the models folder)
+
+- to generate enum
+  ng g e models/gender (note that this will be created in the models folder)
+
+- to generate pipes
+  ng g p shared/init-caps (we can use -m if not app.module is to be updated)
+
+- to generate module (by default module create a subfolder)
+  ng g m login
+  generate a component for a login module
+  ng g c login
+  ng g c login -m login/login.module (to import login.component to login.module)
+
+- to install angular material
+  npm i @angular/material --save
+
+- Generating Routing Features
+  ng g m sales --routing  (sales.module.ts and sales-routing.module.ts
+
+- shortcut to create ul li
+  nav>ul>li*2
+
+tip: if you generate a component without a module, it will update the app.module.
+     otherwise if there is already existing module for that component, that one
+     will be updated.
+
+
+
+
+==== Reactive Forms =======
+Template Driven 
+- Angular automatically creates the Form Model by creating instances of Form Group
+and Form Controls (input controls) and used ngModel for 2 way binding
+
+Reactive Forms
+- User will define the Form Model by creating instances of Form Group and Form Controls
+in the component class. Bind the Template to the Form Model.
+Form Model
+ - Root FormGroup
+ - FormControl for each input element
+ - Nested Form Groups as desired
+ - FormArrays
+
+Reactive Forms Directives
+- formGroup
+- formControl
+- formControlName
+- formGroupName
+- formArrayName
+
+Accessing the Form Model Properties
+- customerForm.controls.firstName.valid
+- customerForm.get('firstName').valid
+
+[] brackets denotes property binding in html angular
+
+Dirty: {{ customerForm.dirty }}
+Touched: {{ customerForm.touched }}
+Valid: {{ customerForm.valid }}
+Value: {{ customerForm.value | json }}
+
+- setValue and patchValue
+  setValue (assign values for all form control input collections)
+  patchValue (assign 1 or more input collections)
+
+- FormBuilder
+  creates a form model from a configuration
+  shortens boilerplate code
+  provided as a service
+  does not use new FormControl
+
+- To use Reactive Forms
+  Import ReactiveFormsModule
+  Add ReactiveFormsModule to the imports array
+  Bind the form element to the FormGroup property
+  <form (ngSubmit)="save()" [formGroup]="customerForm">
+  Bind each input element using the formControlName property
+  <input id="firstNameId" type="text" formControlName="firstName">
+
+- Form Validation
+  Setting Built-in Validation Rules
+    this.CustomerForm = this.fb.group({
+  	firstName: ['',
+		Validators.required],
+        sendCatalog: true
+  });	
+
+  or use an array of validation rules.
+
+  this.CustomerForm = this.fb.group({
+  	firstName: ['',
+		[Validators.required, Validators.minlLength(3)]],
+        sendCatalog: true
+  });	
+
+   
+- Adjusting Validation Rules at Runtime
+  myControl.setValidators(Validators.required)
+  or use an array of validators
+  myControl.setValidators([Validators.required,Validators.minlLength(3)])
+  to clear the validators
+  myControl.clearValidators;
+  then use
+  myControl.updateValueAndValidity(); // call this to re-evaluate form control validation state
+
+- Custom Validator
+  function ratingRange(min: number, max: number): ValidatorFn {
+    return  (c: AbstractControl): {[key: string]: boolean} | null => {
+        if (c.value !== undefined && (isNaN(c.value) || c.value < min || c.value > max)) {
+            return { 'range': true };
+        };
+        return null;
+    };
+}
+
+ then modify ngOnInit
+ngOnInit(): void {
+        this.customerForm = this.fb.group({
+            firstName: ['', [Validators.required, Validators.minLength(3)]],
+            lastName: ['', [Validators.required, Validators.maxLength(50)]],
+            emailGroup: this.fb.group({
+                email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+')]],
+                confirmEmail: ['', Validators.required],
+            }, {validator: emailMatcher}),
+            phone: '',
+            notification: 'email',
+            rating: ['', ratingRange(1, 5)],
+            sendCatalog: true,
+            addresses: this.fb.array([this.buildAddress()])
+        });
+
+- Cross-field Validation: Nested FormGroup
+  Add nested formGroup 
+
+- Reacting to changes
+  Watching and Reacting
+  this.customerForm.get('notification').valueChanges
+                           .subscribe(value => this.setNotification(value));
+
+- debounceTime 
+  Ignores events until a specific time has passed without another event
+
+
+============== Entity Framework =======================
+- Entity City
+
+[key]
+[DatabaseGenerated(DatabaseGeneratedOption:Identity)]
+public int id { get; set; }
+
+[Required]
+[MaxLength(50)]
+public string Name { get; set; }
+
+[MaxLength(200)]
+public string Description { get; set; }
+- Entity PointOfInterest
+[key]
+[DatabaseGenerated(DatabaseGeneratedOption:Identity)]
+public int id { get; set; }
+
+[Required]
+[MaxLength(50)]
+public string name { get; set }
+
+[ForeignKey("CityId")]
+public City { get; set; }
+
+public CityId { get; set; }
+
+- Create DbContext
+  Manage Nuget Packages Microsoft.EntityFrameworkCore.SqlServer
+- Create DbContext class
+- Register DbContext in ConfigureServices
+  
+To enable database migrations (alter table, new table, etc db structure changes)
+- Microsoft.EntityFrameworkCore.Tools
+
+
+Add-Migration CityInfoDbAddPOIDescription
+
+==== Creating ASP.Net from scratch ====
+- in startup.cs
+  ConfigureServices method
+  add services.AddMvc();
+  
+  Configure method
+  add app.UseMvc();
+
+- Status Codes
+  Level 200 - Success
+  200 - Ok
+  201 - Created
+  204 - No Content
+
+  400 - Client Error (Bad Request)
+  401 - Unauthorized
+  403 - Forbidden
+  404 - Not Found
+  409 - Conflict
+
+  Level 500 Server Error
+  500 - Internal Server Error
+
+
+========= entity framework =================
+-Create domain classes
+-Package Manager Console
+Install-Package Microsoft.EntityFrameworkCore.SqlServer
+or use Manage Nuget Packages then select Microsoft.EntityFramework.SqlServer
+-Create dbContext
+-Install Entity Framework Commands
+ Install-Package Microsoft.EntityFrameworkCore.Tools
+ get-help entityframeworkcore (to get available commands)
+ Add-Migration  -> adds a new migration
+ Update-Database -verbose -> Updates the database to a specified migration
+ Drop-Database -> Drops the database
+ Remove-Migration -> Removes the last migration
+ Script-Migration -> Generates an SQL script from migrations (Scripts all migrations)
+ Script-Migration -Idempotent (Scripts all migrations with If/Then logic)
+ Script-Migration -From [] -To [migration] (Controls which range of migrations are scripted)
+ 
+
+-run
+ add-migration init
+
+- Many to many relation resolution
+  
+
+ 
+
+
+ Scaffold-DbContext -> Scaffolds a DbContext and entity types for a database
+ to get help in commands
+ get-help add-migration
+
+
+
+====== asp.net identity =======
+- dotnet ef migrations add Identity
+- dotnet ef database drop
+- UserManager to create user
+- SignInManager to sign-in user
+
+- dotnet ef database update (to create or update database) 
+  em_migrations table are only created.
+- dotnet ef migrations add InitialDb
+- run again dotnet ef database update (to create tables)
+
+  Samurai   SamuraiBattle     Battle
+              
+  use fluent insteado of model anotations
+  override void OnModelCreating(ModelBuilder modelBuilder)
+  {
+	modelBuilder.Entity(SamuaraiBattle()
+	.HasKey(s=> new {s.BattleId, s.SumaraidId);
+
+
+  }
+
+
+============  LESS AND SAAS ====================================
+npm install less
+- LESS
+- declaration of variable
+  @myColor: #ffeedd;
+  @a: Black;     // color
+  @b: 4px;       // Units
+  @c: 1.0em;     // Units
+  @d: Helvetica, sans serif;  // Strings
+  @e: 1px #000 Solid 0 0;  // Complex Type
+They are constants, this doesn't work
+  @myColor: @myColor + 5%;
+- Operations
+  font-size: 4px + 4;
+  font-size: 20px * .8;
+  color: #FFF / 4;
+  width: (100% / 2) + 25%
+- Color Functions
+  color: lighten(@color, 10%);
+  color: darken(@color, 10%);
+
+  color: saturate(@color, 10%);
+  color: desaturate(@color, 10%);
+
+  color: fadein(@color, 10%);
+  color: fadeout(@color, 10%);
+  color: fade(@color, 50%);
+
+  color: spin(@color, 10%);
+  color: mix(@color, #246);
+- More functions
+ @hue: hue(@color);
+ @sat: saturation(@color);
+ @light: lightness(@color);
+ @alpha: alpha(@color);
+ @color: hsl(20%, 30%, 40%);
+
+// Math
+@rnd: round(3.14);
+@top: ceil(3.14);
+@bot: floor(3.14);
+@per: percentage(.14);
+
+- SASS and SCSS
+npm install sass
+var less = require('sass');
+sass.render(sassContents,
+            function (e, css) {
+	      console.log(css);
+	   });
+-Variables
+
+$myColor: #ffeedd;
+$a: Black;
+$b: 4px;
+$c: 1.0em;
+$d: Helvetica, sans-serif;
+
+- Operations
+font-size: 4px +b 4;
+font-size: 20px * .8
+color: #FFF / 4;
+width: (100% / 2) + 25%;
+
+- Color Functions
+color: lighten($color, 10%);
+color: darken($color, 10%);
+
+color: saturate($color, 10%);
+color: desaturate($color, 10%);
+
+color: fade_in($color, .1);
+color: fade_out($color, .1);
+
+color: invert($color);
+color: complement($color);
+
+- More functions
+$quoted: quote($sometext);
+$unquoted: unquote($sometext);
+
+$value: if(true, $color1, $color2);
+
+$rnd: round(3.14);
+$top: ceil(3.14);
+$bot: floor(3.14);
+$per: percentage(.14);
+
+- String interpolation
+$root: "/images/";
+
+#form {
+   background: url("#{$root}background.jpg);
+   // Becomes  url("/images/background.jpg");	
+}
+
+// Also
+$name: "my-class";
+.#{$name} {
+  color: Blue;
+}ng
+
+======== API Authentication ================
+- App Authentication
+  - App Key + Secret is a typical scenario
+- User Authentication (in order of security)
+  - cooke authentication
+  - Basic Authentication (Insecure and slow, use Tokens instead)
+  - Token Authentication
+  - OAuth
+
+apolline_estrella7@yahoo.com
+Javalinux8!@
+
+
+LESS CSS
+Sass files
+wordpress
+Azure
+
+Redis
+
+Redux
+
+Content-Type
+application/json
+
+
+
+
+
