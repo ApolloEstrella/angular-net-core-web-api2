@@ -1,0 +1,31 @@
+<!--The content below is only a placeholder and can be replaced.-->
+  
+{{ getUserStorage() }}
+<div>
+    <nav class='navbar navbar-default'>
+        <div class='container-fluid'>
+            <a class='navbar-brand'>{{pageTitle}}</a>
+            <ul class='nav navbar-nav'>
+                <li>
+                    <a [routerLink]="['/welcome']">Home</a>
+                </li>
+                <li *ngIf="getUserStorage()">
+                    <a [routerLink]="['/login/users']">User List</a>
+                </li>
+                 
+                <li *ngIf="!getUserStorage()">
+                        <a href="javascript:void(0);" (click)="logOut();">Sign-In</a>
+                    </li>
+                <li *ngIf="getUserStorage()">
+                    <a href="javascript:void(0);" (click)="logOut();">Sign-Out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+  
+    <div class='container'>
+        <router-outlet></router-outlet>
+    </div> 
+</div>  
+  
+<!-- <button type="submit" class="btn btn-primary btn-block" (click)="getToken()">Get Token</button> -->

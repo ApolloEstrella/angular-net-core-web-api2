@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="Absolute-Center is-Responsive">
+
+    <div style="color:red">
+      <span [innerHTML]="errorMessage"></span>
+    </div>
+
+    <div class="col-sm-12 col-md-10 col-md-offset-1">
+      <form action="" (ngSubmit)="loginUser()" [formGroup]="loginForm">
+        <div class="form-group" [ngClass]="{'has-error': displayMessage.email }">
+
+
+          <input class="form-control" type="text" name='email' placeholder="email" formControlName="email" />
+          <span class="help-block" *ngIf="displayMessage.email">
+            {{displayMessage.email}}
+          </span>
+        </div>
+        <div class="form-group" [ngClass]="{'has-error': displayMessage.passWord }">
+
+          <input class="form-control" type="password" name='password' placeholder="password" formControlName="passWord" />
+          <span class="help-block" *ngIf="displayMessage.passWord">
+            {{displayMessage.passWord}}
+          </span>
+        </div>
+        <!-- <div class="checkbox">
+            <label>
+              <input type="checkbox"> I agree to the <a href="#">Terms and Conditions</a>
+            </label>
+          </div> -->
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-block" [disabled]='!loginForm.valid'>Login</button>
+        </div>
+        <div class="form-group text-center">
+          <a [routerLink]="['/login/forgot-password']">Forgot Password</a>
+        </div>
+        <div class="form-group text-center">
+          <a [routerLink]="['/login/register']">Register</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div>
+  Dirty: {{ loginForm.dirty }}
+  <br> Touched: {{ loginForm.touched }}
+  <br> Valid: {{ loginForm.valid }}
+  <br> Value: {{ loginForm.value | json }}
+</div>
