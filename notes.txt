@@ -119,6 +119,16 @@ ng server -o
   ng g c login
   ng g c login -m login/login.module (to import login.component to login.module)
 
+- to generate directive
+ ng g d
+
+- to generate guard
+ ng g g
+
+ 
+
+
+
 - to install angular material
   npm i @angular/material --save
 
