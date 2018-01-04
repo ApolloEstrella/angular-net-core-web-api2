@@ -40,7 +40,8 @@ export class TokenInterceptor implements HttpInterceptor {
     }
     else {
       //localStorage.clear();
-      this._router.navigate(['login']);
+      //this._router.navigate(['login']);
+      //alert('token is null');
     }
     //alert(token);
 

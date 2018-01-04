@@ -504,7 +504,24 @@ Redux
 Content-Type
 application/json
 
+========= Angular with John Papa and partner =========
+<select (change)="regionChange($event.target.value)">
+ <option>north</option>
+ <option>south</option>
+</select>
 
+<div [hidden]="hideAddress"></div>
+
+hideAddress = !hideAddress // use toggle button
+
+- binding with input
+
+<input [value]="name" (keyup.enter)="name=$event.target.value"><br/>
+
+_configuration["SecurityKey"]
+
+AA007ILXLG
+ Has anyone ever filed an immigrant petition on your behalf with the United States Citizenship and Immigration Services?
 
 
 

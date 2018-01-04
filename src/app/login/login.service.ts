@@ -6,8 +6,8 @@ import { Observable } from 'rxjs/Observable';
 import { BaseRequestOptions } from '@angular/http/src/base_request_options';
 import { error } from 'selenium-webdriver';
 import { Response } from '@angular/http/src/static_response';
-import { config } from '../config'
-
+import { config } from '../config';
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable()
 export class LoginService {
@@ -16,12 +16,28 @@ export class LoginService {
 
     errorMessage = '';
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private activatedRoute: ActivatedRoute) {
         this.baseUrl = config.ApiBaseUrl
     }
 
     public loginUser(user: User): Observable<Object> {
-        var loginUrl = this.baseUrl + 'login'
+        var userid;
+        var token;
+        var loginUrl;
+
+        this.activatedRoute.queryParams.subscribe(params => {
+            userid = params['userid'];
+            token = params['token'];
+        });
+
+        if (userid !== undefined) {
+            loginUrl = this.baseUrl + 'login' + '?userid=' + userid + '&token=' + token;
+            loginUrl = loginUrl.replace(/[+]/g, '%2B');
+        }
+        else
+            loginUrl = this.baseUrl + 'login';
+
+        //alert(loginUrl);
         return this.http.post(loginUrl, user);
     }
 
@@ -44,9 +60,9 @@ export class LoginService {
         user.password = user.passwordGroup.password.toString();
         var registerUrl = this.baseUrl + 'login/register'
         return this.http.post(registerUrl, user);
-            //.map(this.extractData)
-            //.do(data => console.log('createUser: ' + JSON.stringify(data)))
-            //.catch(this.handleError);
+        //.map(this.extractData)
+        //.do(data => console.log('createUser: ' + JSON.stringify(data)))
+        //.catch(this.handleError);
         //.catch(error => Observable.throw(JSON.stringify(error)))
         /* (.subscribe(
         data => alert('Your account has been created.' + JSON.stringify(data)),
@@ -77,6 +93,29 @@ export class LoginService {
         return this.http.delete(deleteUserUrl);
     }
 
+    public submitForgotPasswordEmail(user: User) {
+        var emailUrl = this.baseUrl + 'login/ForgotPassword'
+        return this.http.post(emailUrl, user);
+    }
+
+    public ResetPassword(user: User): Observable<Object> {
+        var userid;
+        var token;
+        var resetPasswordUrl;
+
+        this.activatedRoute.queryParams.subscribe(params => {
+            userid = params['userid'];
+            token = params['token'];
+        });
+
+        let userResetPassword: User = new User();
+        userResetPassword.id = userid;
+        userResetPassword.token = token;
+        userResetPassword.password = user.passwordGroup.password.toString();
+
+        resetPasswordUrl = this.baseUrl + 'login/ResetPassword';
+        return this.http.post(resetPasswordUrl, userResetPassword);
+    }
 
     private extractData(response: Response) {
         let body = response.json();

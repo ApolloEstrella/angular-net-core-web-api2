@@ -14,6 +14,8 @@ import { LoginModule } from './login/login.module';
 import { HomeComponent } from './login/home.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './login/token.interceptor';
+import { MessageService } from './shared/data.service';
+import { DialogsService } from './shared/dialogs/dialogs.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { TokenInterceptor } from './login/token.interceptor';
     LoginService,
     [{provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
-      multi: true}]
+      multi: true}],
+    MessageService
   ],
   bootstrap: [AppComponent]
 })

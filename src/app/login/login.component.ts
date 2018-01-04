@@ -15,6 +15,9 @@ import { User } from '../login/user'
 
 import { LoginService } from '../login/login.service';
 import { error } from 'selenium-webdriver';
+import { ActivatedRoute } from '@angular/router';
+
+import { MessageService } from '../shared/data.service';
 
 @Component({
     selector: 'app-login',
@@ -39,8 +42,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     user: User;
     errorMessage: string;
+    msgHeader: string;
 
-    constructor(private fb: FormBuilder, private _router: Router, private loginService: LoginService) {
+    constructor(private fb: FormBuilder, private _router: Router, private loginService: LoginService, private msgService: MessageService) {
 
         // Defines all of the validation messages for the form.
         // These could instead be retrieved from a file or database.
@@ -68,6 +72,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
             passWord: ['', Validators.required]
         });
 
+        //alert(this.msgService.msgHeader);
+        this.msgHeader = this.msgService.msgHeader;
     }
 
     ngAfterViewInit(): void {
