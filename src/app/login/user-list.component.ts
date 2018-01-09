@@ -21,7 +21,6 @@ export class UserListComponent implements OnInit {
   }
 
   onDeleteConfirm(userId: string, email: string, index: number) {
-    //alert(userId);
     if (confirm('Delete user: ' + email + ' ?')) {
         this.loginService.deleteUser(userId).subscribe(
           data => this.users.splice(index, 1),

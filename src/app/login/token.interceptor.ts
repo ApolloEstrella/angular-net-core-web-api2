@@ -20,14 +20,11 @@ export class TokenInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    //alert(this.auth.isAuthenticated);
-    //var token = localStorage.getItem('apikey');
     var token = localStorage.getItem("apikey");
     if (token !== null) {
       var jwtHelperService: JwtHelperService = new JwtHelperService(token);
       const tokenExpired: boolean = jwtHelperService.isTokenExpired(token);
       if (tokenExpired) {
-        //localStorage.clear();
         this._router.navigate(['login']);
       }
       else {
@@ -38,12 +35,7 @@ export class TokenInterceptor implements HttpInterceptor {
         });
       }
     }
-    else {
-      //localStorage.clear();
-      //this._router.navigate(['login']);
-      //alert('token is null');
-    }
-    //alert(token);
+     
 
 
     return next.handle(request);

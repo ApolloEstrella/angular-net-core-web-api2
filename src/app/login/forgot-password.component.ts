@@ -84,14 +84,6 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit {
     this._dialogService
     .confirm('Confirm Dialog', 'Are you sure you want to do this?')
     .subscribe(res => this.result = res);
-
-    //let dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-       
-    //});
-
-    //dialogRef.afterClosed().subscribe(result => {
-    //  console.log('The dialog was closed');
-    //});
   }
 
 }

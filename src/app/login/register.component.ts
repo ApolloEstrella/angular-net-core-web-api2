@@ -79,18 +79,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   }
 
-
-
-  /*ngOnInit(): void {
-    this.registerForm = this.fb.group({
-      email: ['', Validators.required],
-      passwordGroup: this.fb.group({
-          passWord: ['',Validators.required],
-          confirmPassword: ['',Validators.required],
-      },{validator: passwordMatcher
-      })
-    });*/
-
   ngOnInit(): void {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+')]],
@@ -132,15 +120,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     let u = Object.assign({}, this.user, this.registerForm.value);
     this.errorMessage = '';
     this.loginService.createUser(u).subscribe(
-      //data => { alert(data); this.router.navigate(['login']); },
       data => {
-        /* this.registerForm.patchValue({
-            email: '',
-            password: ''
-        }); */
-        //this.router.navigate(['login', { msg: data.toString() }]);
-        //this.messageHeader = data.toString();
-
         this.msgService.msgHeader = data.toString();
         this.router.navigate(['login']);
       },
@@ -154,71 +134,11 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         if (this.errorMessage != '') {
           this.errorMessage += '<br/>';
         }
-        //alert(this.errorMessage);
+        
       }
     );
 
-
-    return;
-    //this.loginService.registerUser()
-
-
-    //let headers = new Headers({ 'Content-Type': 'application/json' });
-    //let options = new RequestOptions({ headers: headers });
-    //const url = 'http://localhost:3651/api/cities';
-    //const baseUrl = 'http://localhost:3651/api/cities';
-    //const url = `${baseUrl}`;
-    // let data=JSON.stringify({uname:"raja"});
-    //this.http.post(url, 'user=apol' , options);
-
-
-    //this.http.post(baseUrl, data, options)
-    //.map(res => res.json)
-    //.catch(this.handleError).subscribe();
-
-
-    //this.http.post(baseUrl, { uname: 'apol'}, options).subscribe(res => console.log(res.text()));;
-
-
-
-
-    /* this.http.post(baseUrl, {
-      data,
-    })
-      .subscribe(
-        res => {
-          console.log(res);
-        },
-        err => {
-          console.log("Error occured");
-        }
-      ); */
-
-
-
-    //this.http.post(baseUrl, 'uname=apol', options).subscribe();    
-
-    //this.http.post(baseUrl, { username: 'apol', password: 'abc' })
-    //.map(this.extractData)
-    //.do(data => console.log('createUser: ' + JSON.stringify(data)))
-    //.catch(this.handleError).subscribe();
-
-    /*this.http.get(baseUrl)
-    .map(this.extractData)
-    .do(data => console.log('getProducts: ' + JSON.stringify(data)))
-    .catch(this.handleError).subscribe(); */
-
-    /* this.http.get(baseUrl).map((data: any[]) => {
-       this.products = data;
-       return true;
-    })
-    .do(() => console.log('do'))
-    .catch(this.handleError).subscribe(); */
-
-    //this.http.get(baseUrl).subscribe(res => console.log(res.text()));
-
-
-    //console.log('save user');
+    return;    
   }
 
   public hello() { 
@@ -226,8 +146,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   }
 
   private handleError(error: Response): Observable<any> {
-    // in a real world app, we may send the server to some remote logging infrastructure
-    // instead of just logging it to the console
     console.error('error');
     return Observable.throw('Server error');
   }

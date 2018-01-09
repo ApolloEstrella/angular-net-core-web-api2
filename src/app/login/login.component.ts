@@ -20,7 +20,6 @@ import { ActivatedRoute } from '@angular/router';
 import { MessageService } from '../shared/data.service';
 import { CookieService } from 'ngx-cookie-service';
 
-import '../shared/platform.js';
  
 declare const gapi: any;
 
@@ -30,9 +29,6 @@ declare const gapi: any;
     styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit, AfterViewInit {
-
-    //@LocalStorage() public userName:string = 'User101';
-
 
     @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
    
@@ -44,8 +40,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
     displayMessage: { [key: string]: string } = {};
     private validationMessages: { [key: string]: { [key: string]: string } };
     private genericValidator: GenericValidator;
-
-    //userName: string = "agent01"
 
     user: User;
     errorMessage: string;
@@ -70,11 +64,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
         // Define an instance of the validator for use with this form, 
         // passing in this form's set of validation messages.
         this.genericValidator = new GenericValidator(this.validationMessages);
-        //localStorage.clear();
     }
 
     ngOnInit(): void {
-        //localStorage.clear()
         this.loginForm = this.fb.group({
             email: ['', [Validators.required,
             Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+')]],
@@ -82,7 +74,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
             keepMeSignedIn: false
         });
 
-        //alert(this.msgService.msgHeader);
         this.msgHeader = this.msgService.msgHeader;
     }
 
@@ -111,29 +102,18 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewChecked(): void{
-        //alert('view');
-        //this.d1.nativeElement.insertAdjacentHTML('beforeend', '<div class="g-signin2" data-onsuccess="onSignInGoogle"></div>');
      
     }
 
     addSignIn(): void {
-       // alert('a')
-       //this.d1.nativeElement.insertAdjacentHTML('beforeend', '<div class="g-signin2" data-onsuccess="onSignInGoogle"></div>');
         
     }
 
 
     loginUser(): void {
-        //alert('login now');
-        //window.localStorage.set("userName","b101");
-
 
         let u = Object.assign({}, this.user, this.loginForm.value);
 
-        //this.cookieService.set('username', 'apoln');
-
-        //alert(this.cookieService.get('username'));
-        
         this.loginService.loginUser(u).subscribe(
             data => {localStorage.setItem("email", this.loginForm.get('email').value); this.getToken(u); this._router.navigate(['']) },
             error => {
@@ -146,19 +126,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
                 if (this.errorMessage != '') {
                     this.errorMessage += '<br/>';
                 }
-                //alert(this.errorMessage);
             }
         );
-        //this._router.navigate([''])
     }
 
 
     getToken(user: User) {
-        //alert('token');
-        //var user: User = new User();
-        //user.email = 'apolline_estrella7@yahoo.com';
-        //user.password = 'Javalinux8!@';
-            
         this.loginService.getToken(user).subscribe(
           data => { localStorage.clear(); localStorage.setItem("email", user.email);  localStorage.setItem("apikey", data.token)}, 
           error => alert('error'));

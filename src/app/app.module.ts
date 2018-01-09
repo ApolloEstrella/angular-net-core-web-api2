@@ -26,7 +26,6 @@ import { CookieService } from 'ngx-cookie-service';
   imports: [
     BrowserModule,
     RouterModule.forRoot([
-      //{ path: 'main', component: AppComponent},
       { path: 'welcome', component: HomeComponent},
       { path: '', redirectTo: 'welcome', pathMatch: 'full'},
       { path: '**', redirectTo: 'welcome', pathMatch: 'full'}
