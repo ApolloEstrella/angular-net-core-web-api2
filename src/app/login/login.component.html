@@ -1,3 +1,10 @@
+ <script>
+   alert('abcdef12334');
+ </script>
+ 
+  
+
+
 <div class="row">
   <div class="Absolute-Center is-Responsive">
 
@@ -26,21 +33,22 @@
             {{displayMessage.passWord}}
           </span>
         </div>
-        <!-- <div class="checkbox">
-            <label>
-              <input type="checkbox"> I agree to the <a href="#">Terms and Conditions</a>
-            </label>
-          </div> -->
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" name="keepMeSignedIn" formControlName="keepMeSignedIn"> Keep me signed in
+          </label>
+        </div>
         <div class="form-group">
           <button type="submit" class="btn btn-primary btn-block" [disabled]='!loginForm.valid'>Login</button>
         </div>
-        <div class="form-group text-center">
-          <a [routerLink]="['/login/forgot-password']">Forgot Password</a>
-        </div>
-        <div class="form-group text-center">
-          <a [routerLink]="['/login/register']">Register</a>
-        </div>
       </form>
+      <div class="form-group text-center">
+        <a [routerLink]="['/login/forgot-password']">Forgot Password</a>
+      </div>
+      <div class="form-group text-center">
+        <a [routerLink]="['/login/register']">Register</a>
+      </div>
+      <div id="googleButtonPlaceholder"></div>
     </div>
   </div>
 </div>
@@ -51,3 +59,7 @@
   <br> Valid: {{ loginForm.valid }}
   <br> Value: {{ loginForm.value | json }}
 </div>
+
+ 
+
+ 

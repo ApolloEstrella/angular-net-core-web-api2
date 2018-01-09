@@ -71,7 +71,10 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit {
   submitEmail() {
     let u = Object.assign({}, this.user, this.forgotPasswordForm.value);
     this._loginService.submitForgotPasswordEmail(u).subscribe(
-      data => { this._router.navigate(['login/forgot-password']); },
+      data => {
+         this._dialogService.ok("Message Dialog", "Please check your email for new mail and click the link to reset your password.");    
+         this._router.navigate(['login']); 
+      },
       error => alert(error)
     );
   }
@@ -94,17 +97,4 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit {
 }
 
 
-@Component({
-  selector: 'dialog-overview-example-dialog',
-  templateUrl: './dialog-overview-example-dialog.html'
-})
-export class DialogOverviewExampleDialog {
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-}
+ 

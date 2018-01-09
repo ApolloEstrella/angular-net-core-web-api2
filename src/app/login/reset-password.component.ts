@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { MessageService } from '../shared/data.service';
 import { Observable } from 'rxjs/Observable';
 import { User } from './user';
+import { DialogsService } from '../shared/dialogs/dialogs.service';
 
 function passwordMatcher(c: AbstractControl): { [key: string]: boolean } | null {
   let passwordControl = c.get('password')
@@ -33,12 +34,16 @@ export class ResetPasswordComponent implements OnInit, AfterViewInit {
   
   resetPasswordForm: FormGroup;
   user: User;
+  errorMessage = '';
+
     // Use with the generic validation message class
     displayMessage: { [key: string]: string } = {};
     private validationMessages: { [key: string]: { [key: string]: string } };
     private genericValidator: GenericValidator;
 
-  constructor(private _fb: FormBuilder, private _http: HttpClient, private _loginService: LoginService, private _msgService: MessageService, private _router: Router) { 
+  constructor(private _fb: FormBuilder, private _http: HttpClient, private _loginService: LoginService, 
+              private _msgService: MessageService, private _router: Router,
+              private _dialogService : DialogsService) { 
     this.validationMessages = {
       password: {
         required: 'Password is required.',
@@ -76,7 +81,23 @@ export class ResetPasswordComponent implements OnInit, AfterViewInit {
 
   resetPassword(): void {
     let u = Object.assign({}, this.user, this.resetPasswordForm.value);
-    this._loginService.ResetPassword(u).subscribe();
+    this._loginService.ResetPassword(u).subscribe(
+      data => {
+          this._dialogService.ok('Message Dialog', 'You password has been reset, you may login now.');
+          this._router.navigate(['login']);
+      },
+      error => {
+        var err = JSON.parse(JSON.stringify(error));
+        this.errorMessage = '';
+        for (var key in err.error) {
+          var obj = err.error[key]
+          this.errorMessage += '- ' + obj + '<br/>';
+        };
+        if (this.errorMessage != '') {
+          this.errorMessage += '<br/>';
+        }
+      }
+    );
   }
 
 }

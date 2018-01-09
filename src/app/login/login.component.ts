@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, ViewChildren, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, AfterViewChecked ,OnDestroy, ViewChildren, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators, FormControlName } from '@angular/forms';
 
 import { SharedModule } from '../shared/shared.module';
@@ -18,6 +18,11 @@ import { error } from 'selenium-webdriver';
 import { ActivatedRoute } from '@angular/router';
 
 import { MessageService } from '../shared/data.service';
+import { CookieService } from 'ngx-cookie-service';
+
+import '../shared/platform.js';
+ 
+declare const gapi: any;
 
 @Component({
     selector: 'app-login',
@@ -30,6 +35,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
 
     @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
+   
+    @ViewChild('one') d1:ElementRef;
 
     loginForm: FormGroup;
 
@@ -44,7 +51,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
     errorMessage: string;
     msgHeader: string;
 
-    constructor(private fb: FormBuilder, private _router: Router, private loginService: LoginService, private msgService: MessageService) {
+    constructor(private fb: FormBuilder, private _router: Router, 
+                private loginService: LoginService, private msgService: MessageService,
+                private cookieService: CookieService) {
 
         // Defines all of the validation messages for the form.
         // These could instead be retrieved from a file or database.
@@ -69,7 +78,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.loginForm = this.fb.group({
             email: ['', [Validators.required,
             Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+')]],
-            passWord: ['', Validators.required]
+            passWord: ['', Validators.required],
+            keepMeSignedIn: false
         });
 
         //alert(this.msgService.msgHeader);
@@ -86,7 +96,32 @@ export class LoginComponent implements OnInit, AfterViewInit {
             this.displayMessage = this.genericValidator.processMessages(this.loginForm);
         });
         localStorage.clear();
+        gapi.signin2.render('googleButtonPlaceholder', {
+        'scope': 'https://www.googleapis.com/auth/plus.login',
+        'width': 100,
+        'height': 30,
+        'longtitle': false,
+        'theme': 'light',
+        'onsuccess': this.onSignIn
+      });  
     }
+
+    onSignIn(){
+        alert('sign in')
+    }
+
+    ngAfterViewChecked(): void{
+        //alert('view');
+        //this.d1.nativeElement.insertAdjacentHTML('beforeend', '<div class="g-signin2" data-onsuccess="onSignInGoogle"></div>');
+     
+    }
+
+    addSignIn(): void {
+       // alert('a')
+       //this.d1.nativeElement.insertAdjacentHTML('beforeend', '<div class="g-signin2" data-onsuccess="onSignInGoogle"></div>');
+        
+    }
+
 
     loginUser(): void {
         //alert('login now');
@@ -94,6 +129,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
 
         let u = Object.assign({}, this.user, this.loginForm.value);
+
+        //this.cookieService.set('username', 'apoln');
+
+        //alert(this.cookieService.get('username'));
         
         this.loginService.loginUser(u).subscribe(
             data => {localStorage.setItem("email", this.loginForm.get('email').value); this.getToken(u); this._router.navigate(['']) },

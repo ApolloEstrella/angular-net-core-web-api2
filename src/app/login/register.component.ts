@@ -221,6 +221,10 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     //console.log('save user');
   }
 
+  public hello() { 
+    this.router.navigateByUrl('login');
+  }
+
   private handleError(error: Response): Observable<any> {
     // in a real world app, we may send the server to some remote logging infrastructure
     // instead of just logging it to the console

@@ -16,6 +16,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './login/token.interceptor';
 import { MessageService } from './shared/data.service';
 import { DialogsService } from './shared/dialogs/dialogs.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { DialogsService } from './shared/dialogs/dialogs.service';
     [{provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true}],
-    MessageService
+    MessageService,
+    CookieService
   ],
   bootstrap: [AppComponent]
 })

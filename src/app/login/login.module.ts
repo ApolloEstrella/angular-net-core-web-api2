@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 //import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login.component';
-import { ForgotPasswordComponent, DialogOverviewExampleDialog } from './forgot-password.component';
+import { ForgotPasswordComponent } from './forgot-password.component';
 import { RegisterComponent } from './register.component';
 import { UserListComponent } from './user-list.component';
 import { RouterModule } from '@angular/router';
@@ -31,14 +31,12 @@ import { DialogsModule } from '../shared/dialogs/dialogs.module';
     DialogsModule
     //FormsModule,
   ],
-  entryComponents: [DialogOverviewExampleDialog],
   declarations: [
     LoginComponent,
     ForgotPasswordComponent,
     RegisterComponent,
     UserListComponent,
-    ResetPasswordComponent,
-    DialogOverviewExampleDialog
+    ResetPasswordComponent
   ]
 })
 export class LoginModule { }

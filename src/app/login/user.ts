@@ -6,4 +6,5 @@ export class User {
     lastname: string;
     firstname: string;
     token: string;
+    keepMeSignedIn: boolean;
 }
